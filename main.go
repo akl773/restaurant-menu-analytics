@@ -10,9 +10,7 @@ import (
 )
 
 func main() {
-	//todo get it from args
-	filePath := "log.txt"
-	entries, err := readLogFile(filePath)
+	entries, err := readLogFile("log.txt")
 	if err != nil {
 		log.Fatalf("Error reading log file: %v", err)
 	}
