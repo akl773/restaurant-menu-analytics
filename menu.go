@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sort"
 )
 
 type Entry struct {
@@ -44,5 +45,13 @@ func getTopMenuItems(entries []Entry, count int) ([]MenuItem, error) {
 }
 
 func getTopNMenuItems(items []MenuItem, n int) []MenuItem {
-	return nil
+	// Sort the items slice in descending order based on the Count field
+	sort.SliceStable(items, func(i, j int) bool {
+		return items[i].Count > items[j].Count
+	})
+
+	if n > len(items) {
+		n = len(items)
+	}
+	return items[:n]
 }
