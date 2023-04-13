@@ -8,8 +8,12 @@ RUN go build -o app
 
 FROM alpine
 
+WORKDIR /app
+
 COPY --from=builder /app/app /app/app
 
-ENV FILEPATH /app/log.txt
+ENTRYPOINT ["/app/app"]
 
-ENTRYPOINT ["/app/app", "--logpath=${FILEPATH}"]
+
+## docker build -t restaurantapp .
+## docker run -v /Users/infra/go/src/test-files/restaurant-menu-analytics/log.txt:/app/log.txt restaurantapp
