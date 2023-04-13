@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/stretchr/testify/assert"
 	"reflect"
 	"testing"
 )
@@ -36,6 +37,23 @@ func Test_getTopMenuItems(t *testing.T) {
 			},
 			wantErr: false,
 		},
+		{
+			name: "duplicate combination",
+			args: args{
+				entries: []Entry{
+					{EaterID: 1, FoodMenuID: 1},
+					{EaterID: 1, FoodMenuID: 1},
+					{EaterID: 1, FoodMenuID: 2},
+					{EaterID: 2, FoodMenuID: 1},
+					{EaterID: 2, FoodMenuID: 3},
+					{EaterID: 3, FoodMenuID: 1},
+					{EaterID: 3, FoodMenuID: 4},
+				},
+				count: 3,
+			},
+			want:    nil,
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -44,9 +62,7 @@ func Test_getTopMenuItems(t *testing.T) {
 				t.Errorf("getTopMenuItems() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("getTopMenuItems() got = %v, want %v", got, tt.want)
-			}
+			assert.ElementsMatch(t, got, tt.want)
 		})
 	}
 }
@@ -72,6 +88,22 @@ func Test_getTopNMenuItems(t *testing.T) {
 					{FoodMenuID: 5, Count: 5},
 				},
 				n: 3,
+			},
+			want: []MenuItem{
+				{FoodMenuID: 2, Count: 21},
+				{FoodMenuID: 1, Count: 17},
+				{FoodMenuID: 3, Count: 11},
+			},
+		},
+		{
+			name: "valid use with n greater than length of slice",
+			args: args{
+				items: []MenuItem{
+					{FoodMenuID: 1, Count: 17},
+					{FoodMenuID: 3, Count: 11},
+					{FoodMenuID: 2, Count: 21},
+				},
+				n: 4,
 			},
 			want: []MenuItem{
 				{FoodMenuID: 2, Count: 21},
