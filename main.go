@@ -10,8 +10,11 @@ import (
 )
 
 func main() {
-	//todo get it from args
-	filePath := "log.txt"
+	if len(os.Args) != 2 {
+		log.Fatal("Usage: go run main.go <log_file_path>")
+	}
+
+	filePath := os.Args[1]
 	entries, err := readLogFile(filePath)
 	if err != nil {
 		log.Fatalf("Error reading log file: %v", err)
