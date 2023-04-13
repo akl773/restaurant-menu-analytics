@@ -3,18 +3,29 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
 )
 
-type Entry struct {
-	EaterID    int
-	FoodMenuID int
-}
-
 func main() {
+	//todo get it from args
+	filePath := "log.txt"
+	entries, err := readLogFile(filePath)
+	if err != nil {
+		log.Fatalf("Error reading log file: %v", err)
+	}
 
+	topMenuItems, err := getTopMenuItems(entries, 3)
+	if err != nil {
+		log.Fatalf("Error getting top menu items: %v", err)
+	}
+
+	fmt.Println("Top 3 menu items consumed:")
+	for i, item := range topMenuItems {
+		fmt.Printf("%d. Foodmenu ID: %d, Count: %d\n", i+1, item.FoodMenuID, item.Count)
+	}
 }
 
 func readLogFile(filePath string) ([]Entry, error) {
