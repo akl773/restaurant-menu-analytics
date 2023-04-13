@@ -46,7 +46,11 @@ func getTopMenuItems(entries []Entry, count int) ([]MenuItem, error) {
 
 func getTopNMenuItems(items []MenuItem, n int) []MenuItem {
 	// Sort the items slice in descending order based on the Count field
+	// and use FoodMenuID as a tiebreaker
 	sort.SliceStable(items, func(i, j int) bool {
+		if items[i].Count == items[j].Count {
+			return items[i].FoodMenuID < items[j].FoodMenuID
+		}
 		return items[i].Count > items[j].Count
 	})
 
