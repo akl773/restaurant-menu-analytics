@@ -22,11 +22,13 @@ func Test_getTopMenuItems(t *testing.T) {
 			args: args{
 				entries: []Entry{
 					{EaterID: 1, FoodMenuID: 1},
-					{EaterID: 1, FoodMenuID: 2},
 					{EaterID: 2, FoodMenuID: 1},
-					{EaterID: 2, FoodMenuID: 3},
 					{EaterID: 3, FoodMenuID: 1},
-					{EaterID: 3, FoodMenuID: 4},
+					{EaterID: 1, FoodMenuID: 2},
+					{EaterID: 2, FoodMenuID: 4},
+					{EaterID: 3, FoodMenuID: 123},
+					{EaterID: 13, FoodMenuID: 3},
+					{EaterID: 543, FoodMenuID: 3543},
 				},
 				count: 3,
 			},
